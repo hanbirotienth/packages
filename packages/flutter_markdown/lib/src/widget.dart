@@ -168,7 +168,13 @@ abstract class MarkdownWidget extends StatefulWidget {
     this.listItemCrossAxisAlignment =
         MarkdownListItemCrossAxisAlignment.baseline,
     this.softLineBreak = false,
+    required this.useBlockSyntaxDefault,
+    required this.useInlineSyntaxDefault,
   });
+
+  final bool useBlockSyntaxDefault;
+
+  final bool useInlineSyntaxDefault;
 
   /// The Markdown to display.
   final String data;
@@ -313,6 +319,8 @@ class _MarkdownWidgetState extends State<MarkdownWidget>
       inlineSyntaxes: widget.inlineSyntaxes,
       extensionSet: widget.extensionSet ?? md.ExtensionSet.gitHubFlavored,
       encodeHtml: false,
+      withDefaultBlockSyntaxes: widget.useBlockSyntaxDefault,
+      withDefaultInlineSyntaxes: widget.useInlineSyntaxDefault,
     );
 
     // Parse the source Markdown data into nodes of an Abstract Syntax Tree.
@@ -413,6 +421,8 @@ class MarkdownBody extends MarkdownWidget {
     this.shrinkWrap = true,
     super.fitContent = true,
     super.softLineBreak,
+    super.useBlockSyntaxDefault = true,
+    super.useInlineSyntaxDefault = true,
   });
 
   /// If [shrinkWrap] is `true`, [MarkdownBody] will take the minimum height
@@ -472,6 +482,8 @@ class Markdown extends MarkdownWidget {
     this.physics,
     this.shrinkWrap = false,
     super.softLineBreak,
+    super.useBlockSyntaxDefault = true,
+    super.useInlineSyntaxDefault = true,
   });
 
   /// The amount of space by which to inset the children.
