@@ -5,8 +5,11 @@
 // TODO(goderbauer): Restructure the examples to avoid this ignore, https://github.com/flutter/flutter/issues/110208.
 // ignore_for_file: avoid_implementing_value_types
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown/markdown.dart';
 import '../shared/markdown_demo_widget.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -144,6 +147,29 @@ is being preserved for reference purposes.
 This demo example is being preserved for reference purposes.
 """;
 
+ExtensionSet gitHubNonHeader = ExtensionSet(
+  List<BlockSyntax>.unmodifiable(
+    <BlockSyntax>[
+      const FencedBlockquoteSyntax(),
+      const BlockquoteSyntax(),
+      const EmptyBlockSyntax(),
+      const ParagraphSyntax(),
+    ],
+  ),
+  List<InlineSyntax>.unmodifiable(
+    <InlineSyntax>[
+      StrikethroughSyntax(),
+      AutolinkExtensionSyntax(),
+      LineBreakSyntax(),
+      // Parse "**strong**" and "*emphasis*" tags.
+      EmphasisSyntax.asterisk(),
+      // Parse "__strong__" and "_emphasis_" tags.
+      EmphasisSyntax.underscore(),
+      SoftLineBreakSyntax(),
+    ],
+  ),
+);
+
 class OriginalMarkdownDemo extends StatelessWidget
     implements MarkdownDemoWidget {
   OriginalMarkdownDemo({super.key});
@@ -173,7 +199,12 @@ class OriginalMarkdownDemo extends StatelessWidget
           controller: controller,
           selectable: true,
           data: _markdownData,
+          styleSheet: MarkdownStyleSheet(
+              del: const TextStyle(decoration: TextDecoration.underline)),
           imageDirectory: 'https://raw.githubusercontent.com',
+          useBlockSyntaxDefault: false,
+          useInlineSyntaxDefault: false,
+          extensionSet: gitHubNonHeader,
         ),
       ),
       floatingActionButton: FloatingActionButton(

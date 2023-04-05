@@ -611,7 +611,7 @@ class MarkdownBuilder implements md.NodeVisitor {
     if (_inlines.isEmpty) {
       _inlines.add(_InlineElement(
         tag,
-        style: styleSheet.styles[tag!],
+        style: styleSheet.styles[tag ?? 'p'],
       ));
     }
   }
