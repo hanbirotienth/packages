@@ -147,6 +147,10 @@ is being preserved for reference purposes.
 This demo example is being preserved for reference purposes.
 """;
 
+///Dependency.
+// flutter_markdown:
+//     path: ../package_flutter_markdown_custom/packages/packages/flutter_markdown
+
 ExtensionSet gitHubNonHeader = ExtensionSet(
   List<BlockSyntax>.unmodifiable(
     <BlockSyntax>[
